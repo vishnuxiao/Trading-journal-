@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trading Journal</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: auto; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .profit { color: green; }
+        .loss { color: red; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Trading Journal</h1>
+
+    <form method="post" style="text-align:center; margin-bottom:20px;">
+        Date: <input type="date" name="date" required>
+        Outcome: <input type="number" step="0.01" name="outcome" required>
+        <button type="submit">Add Entry</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Outcome</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry['date'] }}</td>
+            <td class="{{ 'profit' if entry['outcome'] >= 0 else 'loss' }}">
+                {{ entry['outcome'] }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 style="text-align:center;">Monthly Totals</h2>
+    <table>
+        <tr>
+            <th>Month</th>
+            <th>Total Outcome</th>
+        </tr>
+        {% for month, total in monthly_totals.items() %}
+        <tr>
+            <td>{{ month }}</td>
+            <td class="{{ 'profit' if total >= 0 else 'loss' }}">{{ total }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
